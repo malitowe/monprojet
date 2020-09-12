@@ -1,0 +1,95 @@
+{% extends 'dashboard/base.html.twig' %}
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/dashboard.css') }}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#flamingo" role="tab" aria-controls="pills-flamingo" aria-selected="true" style="color: #f7b731">Général</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#cuckoo" role="tab" aria-controls="pills-cuckoo" aria-selected="false" style="color: #f7b731">Sécurité</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="flamingo" role="tabpanel" aria-labelledby="flamingo-tab">
+                        <div>
+                                <div class="card">
+                                    <div class="card-header">Mon profile</div>
+                                    <form method="post">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label class="form-check-label">Nom complet<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="account[full_name]">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="form-check-label">Adresse éléctronique<span class="text-danger">*</span></label>
+                                                        <input type="email" class="form-control" name="account[email]" value="{{ app.user.email }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="form-check-label">Numéro de téléphone<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="account[phone_number]">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="form-check-label">Ville<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="account[city]">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="form-check-label">Etablissement<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="account[school]">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-success">Enregistrer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="tab-pane fade" id="cuckoo" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="card">
+                            <div class="card-header">Modifier le mot de passe</div>
+                            <form method="post">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="form-check-label">Ancien mot de passe</label>
+                                                <input type="password" class="form-control" name="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="form-check-label">Nouveau mot de passe</label>
+                                                <input type="password" class="form-control" name="password_new">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-warning">Enregistrer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')|first|default('fr') }}">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate, nocache" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta name="generator" content="EasyAdmin" />
+
+        <!-- Page title -->
+        <title>{% block page_title %}Admin Login{% endblock %}</title>
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
+
+        {% block head_stylesheets %}
+
+            <!-- Vendor styles -->
+            <link rel="stylesheet" href="{{ asset('assets/admin/vendor/fontawesome/css/font-awesome.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/admin/vendor/metisMenu/dist/metisMenu.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/admin/vendor/animate.css/animate.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/admin/vendor/bootstrap/dist/css/bootstrap.css') }}" />
+
+            <!-- App styles -->
+            <link rel="stylesheet" href="{{ asset('assets/admin/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/admin/fonts/pe-icon-7-stroke/css/helper.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/admin/styles/style.css') }}">
+
+            <style>
+                {#:root { --color-primary: {{ easyadmin_config('design.brand_color') }}; }#}
+            </style>
+        {% endblock %}
+
+{#        {% for css_asset in easyadmin_config('design.assets.css') %}#}
+{#            <link rel="stylesheet" href="{{ asset(css_asset) }}">#}
+{#        {% endfor %}#}
+
+{#        {% block head_favicon %}#}
+{#            {% set favicon = easyadmin_config('design.assets.favicon') %}#}
+{#            <link rel="icon" type="{{ favicon.mime_type }}" href="{{ asset(favicon.path) }}" />#}
+{#        {% endblock %}#}
+
+{#        {% if easyadmin_config('design.rtl') %}#}
+{#            <link rel="stylesheet" href="{{ asset('bundles/easyadmin/app-rtl.css') }}">#}
+{#        {% endif %}#}
+
+    </head>
+
+{% block body %}
+    <body class="blank">
+
+        <div class="color-line"></div>
+
+        {% if error is defined and error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+
+        <div class="login-container">
+            {% block content %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center m-b-md">
+                        <h3>ACCES INTRANET</h3>
+                        <small>Bienvenu(e) dans votre espace de gestion</small>
+                    </div>
+                    <div class="hpanel">
+                        <div class="panel-body">
+                            {% for label, messages in app.session.flashbag.all() %}
+                                {% for message in messages %}
+                                    {% if label == 'success' %}
+                                        <div class="alert alert-success"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                                    {% elseif label == 'notice' %}
+                                        <div class="alert alert-info"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                                    {% elseif label == 'error' %}
+                                        <div class="alert alert-danger"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <form id="login-form" class="form" action="{{ path('admin_check') }}" method="post">
+                                <h3 class="text-center text-info">Login</h3>
+                                <div class="form-group">
+                                    <label for="username" class="text-info">Email:</label><br>
+                                    <input type="text" class="form-control round" placeholder="example@gmail.com" required="required" value="" name="_username" id="username">
+                                    <div class="form-control-position">
+                                        <i class="ft-mail"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="text-info">Mot de passe:</label><br>
+                                    <input type="password" class="form-control round" title="Veillez renseigner votre mot de passe" required="required" placeholder="******" value="" name="_password" id="password">
+                                    <div class="form-control-position">
+                                        <i class="ft-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="remember-me" class="text-info"><span>Se souvenir de moi</span> <span>
+                                    <input type="checkbox" class="i-checks" id="remember-me"  name="remember-me" ></span></label><br>
+                                    <button type="submit" class="btn btn-info btn-md">Connexion</button>
+
+                                </div>
+                                <div id="register-link" class="text-right">
+                                    <a href="{{ path("admin_resetting_request", {}) }}" class="card-link">Mot de passe oublié?</a>
+                                </div>
+                            </form>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock content %}
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <strong>Gestion des camions</strong>
+                </div>
+            </div>
+        </div>
+        <!-- Vendor scripts -->
+        <script src="{{ asset('assets/admin/vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/vendor/metisMenu/dist/metisMenu.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/vendor/iCheck/icheck.min.js') }}"></script>
+        <script src="{{ asset('assets/admin/vendor/sparkline/index.js') }}"></script>
+        <script>
+            // Initialize iCheck plugin
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+        </script>
+    </body>
+{% endblock body %}

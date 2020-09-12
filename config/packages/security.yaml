@@ -1,0 +1,63 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        main:
+            entity: { class: App\Entity\Administrator, property: email }
+        client:
+            entity: { class: App\Entity\User, property: email}
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            provider: main
+            pattern: "^/admin"
+            form_login:
+                provider: main
+                login_path: adminlogin
+                check_path: admin_check
+                default_target_path: /admin
+            anonymous: true
+            logout:
+                path: adminlogout
+                target: adminlogin
+                invalidate_session: true
+            remember_me:
+                secret: "%env(APP_SECRET)%"
+                lifetime: 2232000
+                path: /admin
+        front:
+            provider: client
+            pattern: "^/"
+            form_login:
+                provider: client
+                login_path: app_login
+                check_path: app_login
+                default_target_path: /
+            anonymous: true
+            logout:
+                path: app_logout
+                target: app_login
+            remember_me:
+                secret: "%env(APP_SECRET)%"
+                lifetime: 2232000
+                path: /
+            guard:
+                authenticators:
+                    - App\Security\LoginAuthenticator
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin/resetting/password$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/resetting/sendmail$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/resetting/checkmail$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/reset/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/profile, roles: ROLE_USER }
+    encoders:
+        App\Entity\Administrator: bcrypt
+        App\Entity\Etudiant: bcrypt
+        App\Entity\Enseignant: bcrypt
+        Symfony\Component\Security\Core\User\User: plaintext
+

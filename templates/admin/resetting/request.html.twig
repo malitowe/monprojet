@@ -1,0 +1,45 @@
+{% extends 'admin/login.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                <h3>CONFHIND</h3>
+                <small>Bienvenu(e) dans votre espace de gestion</small>
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        {% if label == 'success' %}
+                            <div class="alert alert-success"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                        {% elseif label == 'notice' %}
+                            <div class="alert alert-info"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                        {% elseif label == 'error' %}
+                            <div class="alert alert-danger"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                        {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    <form class="form-horizontal" action="{{ path('admin_resetting_send_email') }}" id="loginForm" method="post">
+                        <fieldset class="form-group position-relative has-icon-left">
+                            <input type="text" id="username" name="username" placeholder="example@gmail.com" required="required" class="form-control round" />
+                            <div class="form-control-position">
+                                <i class="ft-mail"></i>
+                            </div>
+                        </fieldset>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">{{ 'login.reset_password'|trans({}, 'security') }}</button>
+                        </div>
+
+                    </form>
+                </div>
+                                            
+                <div class="card-footer border-0 p-0">
+                    <p class="float-sm-center text-center">Déjà enregistré?
+                        <a href="" class="card-link">Se connecter</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

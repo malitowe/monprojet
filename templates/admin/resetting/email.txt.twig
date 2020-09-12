@@ -1,0 +1,23 @@
+{% trans_default_domain 'security' %}
+{% block subject %}
+    {%- autoescape false -%}
+        {{ 'resetting.email.subject'|trans({'%username%': user.username}) }}
+    {%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+{#{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}#}
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}
+    Bonjour,
+
+    Vous avez indiqué avoir oublié le mot de passe de votre compte sur <a href="www.voyages-duclos.com">www.voyages-duclos.com</a>.
+    Pour choisir un nouveau mot de passe, merci de cliquer sur le lien suivant: <a href="{{ confirmationUrl }}">{{ confirmationUrl }}</a>
+
+    Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer le mail, le lien expirera après 24 heures.
+
+    {#Cordialement
+    CONFHIND#}
+{% endblock %}

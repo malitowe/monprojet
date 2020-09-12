@@ -1,0 +1,19 @@
+{% trans_default_domain 'activationverification' %}
+{% block subject %}
+{%- autoescape false -%}
+{{ 'activation.email.subject'|trans() }}
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+{{ 'activation.email.message'|trans({'%confirmationUrl%': confirmationUrl}) }}
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}
+    Bienvenu (e) {{ member.fullname }}<br>
+    Veuillez cliquer sur ce lien <a href="{{ confirmationUrl }}">{{ confirmationUrl }}</a> pour activer votre compte.
+    
+    {#Cordialement
+    Le service client des Voyages Duclos#}
+{% endblock %}

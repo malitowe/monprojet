@@ -1,0 +1,18 @@
+{% trans_default_domain 'activationverification' %}
+{% block subject %}
+{%- autoescape false -%}
+{{ 'activation.emailAdmin.subject'|trans() }}
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+{{ 'activation.emailAdmin.message'|trans({'%username%': member.username}) }}
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}
+    Le membre {{ member.username }} demande une activation de votre part.
+    
+    {#Cordialement
+    Le service client des Voyages Duclos#}
+{% endblock %}

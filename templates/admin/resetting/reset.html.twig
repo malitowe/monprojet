@@ -1,0 +1,46 @@
+{% extends 'admin/security/login.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                <h3>ACCES INTRANET</h3>
+                <small>Réinitialisation du mot de passe</small>
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        {% if label == 'success' %}
+                            <div class="alert alert-success"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                        {% elseif label == 'notice' %}
+                            <div class="alert alert-info"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                        {% elseif label == 'error' %}
+                            <div class="alert alert-danger"><i class="ft-user-x"></i> {{ message|trans }}</div>
+                        {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    <form method="POST" >
+                        <fieldset class="form-group position-relative has-icon-left">
+                           <input type="password" class="form-control" placeholder="{{ 'resetting.new_password'|trans({}, 'security') }}" name="_password" required="required" id="password">
+                           <div class="form-control-position">
+                                <i class="ft-lock"></i>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group position-relative has-icon-left">
+                            <input type="password" placeholder="{{ 'resetting.confirm_new_password'|trans({}, 'security') }}" class="form-control" name="_confirm_password" required="required" id="confirm_password">
+                            <div class="form-control-position">
+                                <i class="ft-lock"></i>
+                            </div>
+                        </fieldset>
+                        <input type="hidden" name="token" value="{{ token }}">
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">{{ 'login.reset_password'|trans({}, 'security') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+                                                        
+{% endblock %}
