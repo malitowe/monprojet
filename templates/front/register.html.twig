@@ -11,6 +11,16 @@
 <div class="container">
     <form class="form-horizontal" role="form" method="post">
         <h2>Inscription</h2>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-error">
+                {{ message }}
+            </div>
+        {% endfor %}
         <form class="form-horizontal">
             <fieldset>
                 <!-- Multiple Radios -->

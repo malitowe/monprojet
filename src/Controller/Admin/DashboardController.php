@@ -7,6 +7,8 @@ use App\Entity\Classe;
 use App\Entity\Cours;
 use App\Entity\Enseignant;
 use App\Entity\Etudiant;
+use App\Entity\Etablissement;
+use App\Entity\Ville;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -41,7 +43,8 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToCrud('The Label', 'icon class', EntityClass::class);
         yield MenuItem::linkToCrud('Mes Classes', 'fa fa-chalkboard-teacher', Classe::class);
         yield MenuItem::linkToCrud('Mes Cours', 'fa fa-book-open',Cours::class );
-        yield MenuItem::linkToCrud('Mes archives', 'fa fa-file-archive-o', Cours::class);
+        yield MenuItem::linkToCrud('Mes Etablissements', 'fa fa-file-archive-o', Etablissement::class);
+        yield MenuItem::linkToCrud('Mes Villes', 'fa fa-file-archive-o', Ville::class);
         yield MenuItem::subMenu('Utilisateurs', 'fa fa-user')->setSubItems([
             MenuItem::linkToCrud('Enseignants', 'fa fa-user', Enseignant::class),
             MenuItem::linkToCrud('Etudiants','fa fa-user',Etudiant::class),

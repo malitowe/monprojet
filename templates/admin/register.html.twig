@@ -78,18 +78,32 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
-                            <form id="login-form" class="form" action="{{ path('admin_check') }}" method="post">
-                                <h3 class="text-center text-info">Login</h3>
+                            <form id="login-form" class="form" action="{{ path('adminregister') }}" method="post">
+                                <h3 class="text-center text-info">Register</h3>
                                 <div class="form-group">
-                                    <label for="username" class="text-info">Email:</label><br>
-                                    <input type="text" class="form-control round" placeholder="example@gmail.com" required="required" value="" name="_username" id="username">
+                                    <label for="username" class="text-info">Username:</label><br>
+                                    <input type="text" class="form-control round" placeholder="Nom d'utilisateur" required="required" value="" name="user[username]" id="username">
+                                    <div class="form-control-position">
+                                        <i class="ft-mail"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="text-info">Email:</label><br>
+                                    <input type="email" class="form-control round" placeholder="example@gmail.com" required="required" value="" name="user[email]" id="email">
                                     <div class="form-control-position">
                                         <i class="ft-mail"></i>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="text-info">Mot de passe:</label><br>
-                                    <input type="password" class="form-control round" title="Veillez renseigner votre mot de passe" required="required" placeholder="******" value="" name="_password" id="password">
+                                    <input type="password" class="form-control round" title="Veuillez renseigner votre mot de passe" required="required" placeholder="******" value="" name="user[password]" id="password">
+                                    <div class="form-control-position">
+                                        <i class="ft-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="text-info">Confirmer mot de passe:</label><br>
+                                    <input type="password_confirm" class="form-control round" title="Veuillez renseigner votre mot de passe" required="required" placeholder="******" value="" name="user[password_confirm]" id="password_confirm">
                                     <div class="form-control-position">
                                         <i class="ft-lock"></i>
                                     </div>
@@ -97,11 +111,7 @@
                                 <div class="form-group">
                                     <label for="remember-me" class="text-info"><span>Se souvenir de moi</span> <span>
                                     <input type="checkbox" class="i-checks" id="remember-me"  name="remember-me" ></span></label><br>
-                                    <button type="submit" class="btn btn-info btn-md">Connexion</button>
-
-                                </div>
-                                <div id="register-link" class="text-right">
-                                    <a href="{{ path("admin_resetting_request", {}) }}" class="card-link">Mot de passe oublié?</a>
+                                    <button type="submit" class="btn btn-info btn-md">Créer mon compte</button>
                                 </div>
                             </form>
                          </div>

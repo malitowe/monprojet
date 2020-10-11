@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use App\Util\TokenGenerator;
 use App\Entity\Administrator;
 
 class SecurityController extends AbstractController {
@@ -31,6 +33,39 @@ class SecurityController extends AbstractController {
             'last_username' => $lastUsername,
             'error' => $error,
         ));
+    }
+
+    /**
+    * @Route("/admin/register", name="adminregister")
+    */
+    public function adminRegisterAction(Request $request, , EncoderFactoryInterface $encoder){
+        $em = $this->getDoctrine()->getManager();
+        if ($request->getMethod() == "POST"){
+            $tokenGenerator = new TokenGenerator();
+            $data = $request->request->get("user");
+            $user = new Administrator();
+            $user->setCreatedAt(new \DateTime());
+            $user->setFullName($data['username']);
+            $user->setUsername($data['username']);
+            $user->setConfirmationToken($tokenGenerator->generateToken());
+            $user->setEmail($data['email']);
+            $user->setUpdatedAt(new \DateTime());
+            $em->persist($user);
+
+
+            if ($data['password'] == $data['password_confirm']) {
+                $passwordEncoder = $encoder->getEncoder($user);
+                $password_encoded = $passwordEncoder->encodePassword($data['password'], '');
+                $user->setPassword($password_encoded);
+            }else{
+                $this->addFlash("error", "Les mots de passe ne sont pas identique");
+            }
+            $em->persist($user);
+            $em->flush();
+            $this->redirectToRoute("admin");
+            $this->addFlash("success", "Utilisateur cree avec succes");
+        }
+        return $this->render("front/register.html.twig");
     }
 
     /**

@@ -1,0 +1,9 @@
+# app_topic_chat:
+#     channel: 'app/chat/{first_user}/{second_user}'
+#     handler:
+#         callback: 'chat.topic' #related to the getName() of your topic
+#     requirements:
+#         first_user:
+#             pattern: '\d+' #accept all valid regex, don't put delimiters !
+#         second_user:
+#             pattern: '\d+'
