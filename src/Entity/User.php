@@ -272,7 +272,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return $this->getFirstname().' '.$this->getLastname();
+        return $this->getUsername();//$this->getFirstname().' '.$this->getLastname();
     }
 
     /**
@@ -434,7 +434,5 @@ class User implements UserInterface, \Serializable
     {
         $this->type_user = $type_user;
     }
-
-
 
 }

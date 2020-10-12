@@ -4,7 +4,7 @@
  */
 import h from './helpers.js';
 
-const wsUrl = 'ws://127.0.0.1:1337';
+const wsUrl = 'ws://localhost:1337';
 var servers = {
     iceServers: []
 }
@@ -32,6 +32,22 @@ window.addEventListener('load', ()=>{
 
     else{
         //Enregistrer le roomname en BD
+        let url = location.href
+        let courseId = decodeURIComponent(url).split('#', 2)[0].split('?',2)[0].split('/',5)[4];
+        
+        var payload = {room:room};
+
+        var data = new FormData();
+        data.append( "json", JSON.stringify( payload ) );
+
+        fetch("/course/"+courseId+"/update",
+        {
+            method: "POST",
+            body: data
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){ alert( JSON.stringify( data ) ) });
+
         let commElem = document.getElementsByClassName('room-comm');
 
         for(let i = 0; i < commElem.length; i++){

@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Enseignant extends User
 {
     /**
-     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="Created_by")
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="created_by")
      */
-    private $Created_course;
+    private $created_course;
 
     /**
      * @ORM\OneToMany(targetEntity=Classe::class, mappedBy="added_by", orphanRemoval=true)
@@ -24,7 +24,7 @@ class Enseignant extends User
     public function __construct()
     {
         parent::__construct();
-        $this->Created_course = new ArrayCollection();
+        $this->created_course = new ArrayCollection();
         $this->classes_added = new ArrayCollection();
     }
 
@@ -33,13 +33,13 @@ class Enseignant extends User
      */
     public function getCreatedCourse(): Collection
     {
-        return $this->Created_course;
+        return $this->created_course;
     }
 
     public function addCreatedCourse(Cours $createdCourse): self
     {
-        if (!$this->Created_course->contains($createdCourse)) {
-            $this->Created_course[] = $createdCourse;
+        if (!$this->created_course->contains($createdCourse)) {
+            $this->created_course[] = $createdCourse;
             $createdCourse->setCreatedBy($this);
         }
 
@@ -48,8 +48,8 @@ class Enseignant extends User
 
     public function removeCreatedCourse(Cours $createdCourse): self
     {
-        if ($this->Created_course->contains($createdCourse)) {
-            $this->Created_course->removeElement($createdCourse);
+        if ($this->created_course->contains($createdCourse)) {
+            $this->created_course->removeElement($createdCourse);
             // set the owning side to null (unless already changed)
             if ($createdCourse->getCreatedBy() === $this) {
                 $createdCourse->setCreatedBy(null);
@@ -89,4 +89,5 @@ class Enseignant extends User
 
         return $this;
     }
+
 }

@@ -35,7 +35,7 @@ class Etablissement
     private $updated_at;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="etablissements")
      */
     private $ville;
 
@@ -123,20 +123,21 @@ class Etablissement
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getVille()
+    public function getVille(): ?Ville
     {
         return $this->ville;
     }
 
-    /**
-     * @param mixed $ville
-     */
-    public function setVille($ville): void
+    public function setVille(?Ville $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function __toString(){
+
+        return $this->getLibelle();
     }
 
 }

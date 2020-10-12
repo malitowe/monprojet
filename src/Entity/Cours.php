@@ -63,7 +63,7 @@ class Cours
     /**
      * @ORM\ManyToOne(targetEntity=Enseignant::class, inversedBy="Created_course")
      */
-    private $Created_by;
+    private $created_by;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Participate_cours")
@@ -75,6 +75,7 @@ class Cours
     {
         $this->enseignements = new ArrayCollection();
         $this->Participants = new ArrayCollection();
+        $this->code = "code";
     }
 
     public function getId(): ?int
@@ -172,12 +173,12 @@ class Cours
 
     public function getCreatedBy(): ?Enseignant
     {
-        return $this->Created_by;
+        return $this->created_by;
     }
 
-    public function setCreatedBy(?Enseignant $Created_by): self
+    public function setCreatedBy(?Enseignant $created_by): self
     {
-        $this->Created_by = $Created_by;
+        $this->created_by = $created_by;
 
         return $this;
     }

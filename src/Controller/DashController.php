@@ -11,6 +11,7 @@ use App\Entity\Etablissement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DashController extends AbstractController
 {
@@ -42,11 +43,12 @@ class DashController extends AbstractController
      */
     public function showCours()
     {
-        $user = $this->getUser();
-        if(!$user){
-            return $this->redirectToRoute('app_login');
-        }
+        $em = $this->getDoctrine()->getManager();
+        $enseignant = $this->getUser();
+        $cours = $em->getRepository(Cours::class)->findBy(array('created_by' => $enseignant));
         return $this->render('dashboard/cours.html.twig', [
+            'classes' => $em->getRepository(Classe::class)->findAll(),
+            'cours' => $cours
         ]);
     }
 
@@ -112,5 +114,39 @@ class DashController extends AbstractController
            $this->addFlash("success", "cours enregistré");
         }
         return $this->redirectToRoute('espace-prive-cours');
+    }
+
+    /**
+    *@Route("/course/{id}", name="course_start")
+    */
+    public function conference(Cours $cours)
+    {
+        $user = $this->getUser();
+        return $this->render('websocket/conference.html.twig', [
+            'controller_name' => 'WebsocketController',
+            'libelle'=>$cours->getLibelle(),
+            'username'=>$user->getUsername()
+        ]);
+    }
+
+    /**
+    *@Route("/course/{id}/update", name="course_update")
+    */
+    public function courseUpdate(Request $request, Cours $cours)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        if ($request->getMethod() == 'POST'){
+            $code = $request->request->get("json");
+            $course_code = json_encode(json_decode($code)->room);
+            $course_code = str_replace('"', '', $course_code);
+            $course = $em->getRepository(Cours::class)->findOneBy(['id'=>$cours->getId()]);
+            $course->setCode($course_code);
+            $course->setStatus(1);
+            $em->persist($course);
+            $em->flush();
+            $response = "Cours Démarré";
+            return new JsonResponse($response); 
+        }
     }
 }

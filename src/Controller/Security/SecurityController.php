@@ -38,7 +38,7 @@ class SecurityController extends AbstractController {
     /**
     * @Route("/admin/register", name="adminregister")
     */
-    public function adminRegisterAction(Request $request, , EncoderFactoryInterface $encoder){
+    public function adminRegisterAction(Request $request,  EncoderFactoryInterface $encoder){
         $em = $this->getDoctrine()->getManager();
         if ($request->getMethod() == "POST"){
             $tokenGenerator = new TokenGenerator();
@@ -62,10 +62,10 @@ class SecurityController extends AbstractController {
             }
             $em->persist($user);
             $em->flush();
-            $this->redirectToRoute("admin");
+            $this->redirectToRoute("adminlogin");
             $this->addFlash("success", "Utilisateur cree avec succes");
         }
-        return $this->render("front/register.html.twig");
+        return $this->render("admin/register.html.twig");
     }
 
     /**

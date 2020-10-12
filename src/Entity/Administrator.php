@@ -78,14 +78,14 @@ class Administrator implements UserInterface, \Serializable
     protected $passwordRequestedAt;
 
     /**
-     * @ORM\Column(type="integer", options={"default":0})
+     * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private $created_at;
 
     /**
-     * @ORM\Column(type="integer", options={"default":0})
+     * @ORM\Column(type="datetime")
      */
-    private $updatedAt;
+    private $updated_at;
 
     public function __construct()
     {
@@ -279,25 +279,27 @@ class Administrator implements UserInterface, \Serializable
     }
 
 
-    public function getCreatedAt(): ?int
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(int $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $created_at): self
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
+
         return $this;
     }
 
-    public function getUpdatedAt(): ?int
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->updated_at;
     }
 
-    public function setUpdatedAt(int $updatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updated_at;
+
         return $this;
     }
 }

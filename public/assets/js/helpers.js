@@ -126,7 +126,7 @@ export default {
         //     ]
         // };
 
-        return fetch("/Server.php").then((res)=>{
+        return fetch("/iceServer").then((res)=>{
             if(res.ok){
                 console.log(res);
                 return res.json();

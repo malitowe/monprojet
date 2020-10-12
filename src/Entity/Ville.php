@@ -61,24 +61,24 @@ class Ville
 
     public function getCode(): ?string
     {
-        return $this->Code;
+        return $this->code;
     }
 
-    public function setCode(string $Code): self
+    public function setCode(string $code): self
     {
-        $this->Code = $Code;
+        $this->code = $code;
 
         return $this;
     }
 
     public function getLibelle(): ?string
     {
-        return $this->Libelle;
+        return $this->libelle;
     }
 
-    public function setLibelle(string $Libelle): self
+    public function setLibelle(string $libelle): self
     {
-        $this->Libelle = $Libelle;
+        $this->libelle = $libelle;
 
         return $this;
     }
@@ -148,5 +148,10 @@ class Ville
         }
 
         return $this;
+    }
+
+    public function __toString(){
+
+        return $this->getLibelle();
     }
 }
