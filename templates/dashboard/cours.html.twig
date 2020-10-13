@@ -5,11 +5,11 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        <div class="text-right">
+        {#<div class="text-right">
             <a href="{{ path('espace-prive-cours-creation') }}" class="btn btn-success" data-toggle="modal" data-target="#myModal">Creer cours</a>
-        </div>
+        </div>#}
         {% if cours %}
-            <h4>{{ cours|length  }} cours</h4>
+            <h4>{{ cours|length  }} cours </h4>
             <div class="row">
                 {% for cour in cours %}
                 <div class="col-sm-3">
@@ -18,10 +18,18 @@
                             <p>{{ cour.libelle }}</p>
                             <p>{{ cour.classe.libelle }}</p>
                             <p>{{ cour.classe.etablissement.libelle }}</p>
-                            {% if cour.status %}
-                            <a href="/course/{{cour.id}}?room={{cour.code}}"><p>Démarrer le cours</p></a>
-                            {% else %}
-                            <a href={{path('course_start',{'id':cour.id})}}><p>Démarrer le cours</p></a>
+                            {% if app.user.getTypeUser == 'enseignant'%}
+                                {% if cour.status %}
+                                <a href="/course/{{cour.id}}?room={{cour.code}}"><p>Démarrer le cours</p></a>
+                                {% else %}
+                                <a href={{path('course_start',{'id':cour.id})}}><p>Démarrer le cours</p></a>
+                                {% endif %}
+                            {% elseif app.user.getTypeUser == 'etudiant' %}
+                                {% if cour.status %}
+                                <a href="/course/{{cour.id}}?room={{cour.code}}"><p>Rejoindre le cours</p></a>
+                                {% else %}
+                                <p>Le cours n'a pas commencé</p>
+                                {% endif %}
                             {% endif %}
                             <p>
                                 <a><i class="fa fa-edit"></i></a>

@@ -4,6 +4,7 @@
     <link href="{{ asset('assets/css/dashboard.css') }}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+    {% if enseignant is defined and etudiant is not defined %}
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
@@ -111,6 +112,36 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <img src="{{ asset('images/cours.png') }}">
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <div class="jss410"><a class="MuiTypography-root jss413 MuiTypography-h3" href="{{ path('espace-prive-cours') }}">Cours</a></div>
+                                <p class="card-title"><p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-refresh"></i>
+                        Accéder à un cours
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {#    <div class="row">#}
 {#        <div class="col-md-12">#}
 {#            <div class="card ">#}

@@ -24,8 +24,18 @@ class DashController extends AbstractController
         if(!$user){
             return $this->redirectToRoute('app_login');
         }
+        $enseignant = NULL;
+        $etudiant  = NULL;
+        if($user instanceof Etudiant){
+            $etudiant = $user;
+        }
+        if($user instanceof Enseignant){
+            $enseignant = $user;
+        }
         return $this->render('dashboard/index.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'enseignant' => $enseignant,
+            'etudiant' => $etudiant
         ]);
     }
 
@@ -44,8 +54,20 @@ class DashController extends AbstractController
     public function showCours()
     {
         $em = $this->getDoctrine()->getManager();
-        $enseignant = $this->getUser();
-        $cours = $em->getRepository(Cours::class)->findBy(array('created_by' => $enseignant));
+        $enseignant = NULL;
+        $etudiant  = NULL;
+        $cours = NULL;
+        $user = $this->getUser();
+        if($user->getTypeUser() == "etudiant"){
+            $etudiant = $user;
+            $cours = $em->getRepository(Cours::class)->findAll();
+            //dump($cours);
+        }
+        if($user->getTypeUser() == "enseignant"){
+            $enseignant = $user;
+            $cours = $em->getRepository(Cours::class)->findBy(array('created_by' => $enseignant));
+        }
+        //dump($user);die;
         return $this->render('dashboard/cours.html.twig', [
             'classes' => $em->getRepository(Classe::class)->findAll(),
             'cours' => $cours
