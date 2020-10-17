@@ -50,7 +50,8 @@ class Cours
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Classe::class, inversedBy="cours")
+     * @ORM\ManyToOne(targetEntity=Classe::class, inversedBy="cours", cascade={"remove", "persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $classe;
 
@@ -61,7 +62,8 @@ class Cours
     private $enseignements;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Enseignant::class, inversedBy="Created_course")
+     * @ORM\ManyToOne(targetEntity=Enseignant::class, inversedBy="Created_course", cascade={"remove", "persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $created_by;
 
